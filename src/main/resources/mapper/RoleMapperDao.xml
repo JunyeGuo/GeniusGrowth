@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.workflow.project.dao.RoleDao" >
+  <resultMap id="BaseResultMap" type="com.workflow.project.entity.Role" >
+    <id column="rid" property="roleId" jdbcType="BIGINT" />
+    <result column="rname" property="roleName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    rid, rname
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from role
+    where rid = #{roleId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from role
+    where rid = #{roleId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.workflow.project.entity.Role" >
+    insert into role (rid, rname)
+    values (#{roleId,jdbcType=BIGINT}, #{roleName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.workflow.project.entity.Role" >
+    insert into role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="roleId != null" >
+        rid,
+      </if>
+      <if test="rname != null" >
+        rname,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="roleId != null" >
+        #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="roleName != null" >
+        #{roleName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.workflow.project.entity.Role" >
+    update role
+    <set >
+      <if test="roleName != null" >
+        rname = #{roleName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where rid = #{roleId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.workflow.project.entity.Role" >
+    update role
+    set rname = #{roleName,jdbcType=VARCHAR}
+    where rid = #{roleId,jdbcType=BIGINT}
+  </update>
+</mapper>
